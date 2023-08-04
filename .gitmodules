@@ -10,3 +10,6 @@
 [submodule ".oh-my-zsh/custom/plugins/zsh-syntax-highlighting"]
 	path = .oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 	url = git@github.com:zsh-users/zsh-syntax-highlighting.git
+[submodule "/home/coder/.tmux/plugins/tpm"]
+	path = /home/coder/.tmux/plugins/tpm
+	url = git@github.com:tmux-plugins/tpm.git
