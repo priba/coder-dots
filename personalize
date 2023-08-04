@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# zsh
+sudo apt install zsh --yes
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+ln -s ~/.config/zsh/dracula.zsh-theme ~/.oh-my-zsh/themes/dracula.zsh-theme
+
+sudo sh ~/.starship_installer/install.sh --yes
+
+# Solve: bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+sudo locale-gen en_US.UTF-8
+sudo update-locale LANG=en_US.UTF-8
+sudo update-locale LANGUAGE=en_US.UTF-8
+sudo update-locale LC_ALL=en_US.UTF-8
+
+# Install editor
+sudo add-apt-repository ppa:maveonair/helix-editor
+sudo apt update
+sudo apt install helix --yes
+sudo npm install --location=global pyright 
+
+# Terminal multiplexer
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)" 
+/home/linuxbrew/.linuxbrew/bin/brew install tmux
+
+# Cat clone with wings
+sudo apt install bat --yes
+
+sudo apt install git-lfs --yes
+
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
+
+git clone --filter=blob:none --sparse git@github.com:ryanoasis/nerd-fonts
+cd nerd-fonts
+git sparse-checkout add patched-fonts/JetBrainsMono
+./install.sh JetBrainsMono
+cd ..
+rm -rf nerd-fonts
+
+sudo apt install ranger --yes
