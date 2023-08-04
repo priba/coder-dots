@@ -39,4 +39,5 @@ git sparse-checkout add patched-fonts/JetBrainsMono
 cd ..
 rm -rf nerd-fonts
 
-sudo apt install ranger --yes
+sudo apt install nnn --yes
+/home/linuxbrew/.linuxbrew/bin/brew install lazygit

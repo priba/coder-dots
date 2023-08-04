@@ -135,13 +135,15 @@ export LC_ALL=en_US.UTF-8
 alias ls="exa --color=always --octal-permissions --git --group-directories-first --classify --long"
 alias la="exa -a --color=always --octal-permissions --git --group-directories-first --classify --long"
 alias ll="exa -a --color=always --octal-permissions --git --group-directories-first --classify --long"
-alias ee="ranger"
+alias ee="nnn"
 # Tree view: use as `lt 3 <folder>` for a 3 level tree of <folder>
 alias lt="exa -a --color=never --git --tree --octal-permissions --long --header --group-directories-first --icons"
 alias cf="cd \$(find . -type d -print | fzf)"
 alias cat="batcat"
 alias sysinfo="macchina"
 alias kw=krakenw
+alias dots='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+
 # We need the last version of tmux which is not available in apt
 PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 
