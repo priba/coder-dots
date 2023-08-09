@@ -4,9 +4,9 @@
 sudo apt install zsh --yes
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-ln -s ~/.config/zsh/dracula.zsh-theme ~/.oh-my-zsh/themes/dracula.zsh-theme
+#ln -s ~/.config/zsh/dracula.zsh-theme ~/.oh-my-zsh/themes/dracula.zsh-theme
 
-sudo sh ~/.starship_installer/install.sh --yes
+sh ~/.starship_installer/install.sh --yes
 
 # Solve: bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
 sudo locale-gen en_US.UTF-8
@@ -41,3 +41,4 @@ rm -rf nerd-fonts
 
 sudo apt install nnn --yes
 /home/linuxbrew/.linuxbrew/bin/brew install lazygit
+pipx install nvitop
