@@ -8,7 +8,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="dracula"
+# ZSH_THEME="dracula"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -135,14 +135,42 @@ export LC_ALL=en_US.UTF-8
 alias ls="exa --color=always --octal-permissions --git --group-directories-first --classify --long"
 alias la="exa -a --color=always --octal-permissions --git --group-directories-first --classify --long"
 alias ll="exa -a --color=always --octal-permissions --git --group-directories-first --classify --long"
-alias ee="nnn"
 # Tree view: use as `lt 3 <folder>` for a 3 level tree of <folder>
-alias lt="exa -a --color=never --git --tree --octal-permissions --long --header --group-directories-first --icons"
+alias tree="dust -r"
+alias lt="dust -r"
+
 alias cf="cd \$(find . -type d -print | fzf)"
 alias cat="batcat"
-alias sysinfo="macchina"
+alias sysinfo="macchina -UKs"
 alias kw=krakenw
+alias lgit=lazygit
+alias top=btm
 alias dots='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+
+alias nnn="nnn -de" # -d for details and -e to open files in $VISUAL (for other options, see 'man nnn'...)
+alias ee="nnn"
+#-----
+export NNN_OPTS="H" # 'H' shows the hidden files. Same as option -H (so 'nnn -deH')
+# export NNN_OPTS="deH" # if you prefer to have all the options at the same place
+export LC_COLLATE="C" # hidden files on top
+export NNN_FIFO="/tmp/nnn.fifo" # temporary buffer for the previews
+export NNN_FCOLORS="AAAAE631BBBBCCCCDDDD9999" # feel free to change the colors
+export NNN_PLUG='p:preview-tui' # many other plugins are available here: https://github.com/jarun/nnn/tree/master/plugins
+export SPLIT='v' # to split Kitty vertically
+#-----
+n () # to cd on quit
+{
+    if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
+        echo "nnn is already running"
+        return
+    fi
+    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+    nnn "$@"
+    if [ -f "$NNN_TMPFILE" ]; then
+            . "$NNN_TMPFILE"
+            rm -f "$NNN_TMPFILE" > /dev/null
+    fi
+}
 
 # We need the last version of tmux which is not available in apt
 PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
@@ -152,6 +180,8 @@ export LC_ALL='en_US.UTF-8'
 export LANG='en_US.UTF-8'
 export LANGUAGE='en_US.UTF-8'
 
+export EDITOR='hx'
+
 export NEPTUNE_API_TOKEN="eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vbmVwdHVuZS5oZWxzaW5nLWRldi5haSIsImFwaV91cmwiOiJodHRwczovL25lcHR1bmUuaGVsc2luZy1kZXYuYWkiLCJhcGlfa2V5IjoiOTllYzVmZjUtYTk5OS00YTBlLWI4NmQtMTc1OThkMTdlMjI2In0="
 export SPINE_CONFIG_STR=eyJpbnN0YW5jZXMiOiB7InByb2QiOiB7Imhvc3QiOiAic3BpbmUtYXBpLmhlbHNpbmctZGV2LmFpIiwgImF1dGhvcml0eSI6ICJrZXljbG9hay5oZWxzaW5nLWRldi5haSIsICJyZWFsbSI6ICJoZWxzaW5nIiwgImNsaWVudF9pZCI6ICJkZXZpY2UtY2xpZW50IiwgInVzZV9kZXZpY2VfY29kZSI6IHRydWUsICJzY29wZXMiOiBbInNwaW5lLWJhY2tlbmQiLCAib2ZmbGluZV9hY2Nlc3MiXX19LCAiYWN0aXZlX2Vudmlyb25tZW50IjogInByb2QiLCAidG9rZW5fY2FjaGVfZGlyZWN0b3J5IjogbnVsbCwgInRva2VucyI6IHsiYmVhcmVyIjogImV5SmhiR2NpT2lKU1V6STFOaUlzSW5SNWNDSWdPaUFpU2xkVUlpd2lhMmxrSWlBNklDSmlSbFZZVkVSQk9WaFBaa0oyZEVseU9VUk5lVFJ0YVVSRGVIRnpWbHAyV0RsemVHcHhNMWd0YmpKSkluMC5leUpsZUhBaU9qRTJPVEF5T1RNeE9Ea3NJbWxoZENJNk1UWTVNREkzTlRFNE9Td2lZWFYwYUY5MGFXMWxJam94Tmprd01qY3pPVFEwTENKcWRHa2lPaUk0Wm1OaU5qSXdOQzFqTnpVd0xUUmpNakV0T0RJMlpTMWpNbVJqT1RabE9ERmhNakVpTENKcGMzTWlPaUpvZEhSd2N6b3ZMMnRsZVdOc2IyRnJMbWhsYkhOcGJtY3RaR1YyTG1GcEwyRjFkR2d2Y21WaGJHMXpMMmhsYkhOcGJtY2lMQ0poZFdRaU9pSnpjR2x1WlMxaVlXTnJaVzVrSWl3aWMzVmlJam9pTXpRMllqUTRObVV0WXprNU5TMDBNemMzTFdFM1pURXRNbUkzTmpZeVpHTm1aalExSWl3aWRIbHdJam9pUW1WaGNtVnlJaXdpWVhwd0lqb2laR1YyYVdObExXTnNhV1Z1ZENJc0luTmxjM05wYjI1ZmMzUmhkR1VpT2lJeE9ESTRaV1ZoWkMwMlpEY3hMVFF4TkdZdE9XRmtNeTAxTURJMk5UTTRNelJsWVRZaUxDSmhZM0lpT2lJd0lpd2ljbVZoYkcxZllXTmpaWE56SWpwN0luSnZiR1Z6SWpwYkltOW1abXhwYm1WZllXTmpaWE56SWl3aVpHVm1ZWFZzZEMxeWIyeGxjeTFvWld4emFXNW5JaXdpZFcxaFgyRjFkR2h2Y21sNllYUnBiMjRpWFgwc0luTmpiM0JsSWpvaWIzQmxibWxrSUc5bVpteHBibVZmWVdOalpYTnpJSEJ5YjJacGJHVWdaVzFoYVd3Z2MzQnBibVV0WW1GamEyVnVaQ0lzSW5OcFpDSTZJakU0TWpobFpXRmtMVFprTnpFdE5ERTBaaTA1WVdRekxUVXdNalkxTXpnek5HVmhOaUlzSW1WdFlXbHNYM1psY21sbWFXVmtJanBtWVd4elpTd2libUZ0WlNJNklsQmhkU0JTYVdKaElFWnB3Nmx5Y21WNklpd2ljSEpsWm1WeWNtVmtYM1Z6WlhKdVlXMWxJam9pY0dGMUxuSnBZbUZBYUdWc2MybHVaeTVoYVNJc0ltZHBkbVZ1WDI1aGJXVWlPaUpRWVhVaUxDSm1ZVzFwYkhsZmJtRnRaU0k2SWxKcFltRWdSbW5EcVhKeVpYb2lMQ0psYldGcGJDSTZJbkJoZFM1eWFXSmhRR2hsYkhOcGJtY3VZV2tpZlEuSlVKTWYyU3lKWWEzNlpoVjVldFR3VmdTZ0dEV0FaRUYyUEdLXzd0SUoxdkJRSWh1OHhpOWxNVmN3VDBFdE9Vdi1xLWU4VnQ4Si1jQ09YeUhNdDFhbDRMRWFUNTJOa0EweDF4bXNxUXhrVVV5OXljT05td3NHbVhKaTZIR0dFYUZfM1N6MjNjd0FDX3NwRmNqRWVoTXJLWUJub0ZyV1h3NTlzTW5ZSnN0azZFVzNNSWdtQ3ZNUW41TTlRbHRMREpsbDJ1VTVndWREVUh2X3ZId3Y1Z3I1V3RzUnRDUjdfT2FSVEQycmkzOUVYOTJKZ0gwb0lvWGotbkxOb2FJTy00N0lJMFFSbmc2Rm9TWWUwM08tTlpUMlZxOEJ6NFV1V1FIQy1acE9pckxKRjdfaVhFdUNHeXhvZ0duU3EtVzE2TE1VZUhMYm9fVlBtd3ZzcktFSGRmUnpBIiwgInJlZnJlc2giOiAiZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJZ09pQWlTbGRVSWl3aWEybGtJaUE2SUNKaE5tWmhaVEk1WkMxbU0yUmhMVFJoTXpNdE9HWTBNeTAyTWpZeFkyWmhaRFU1Tm1FaWZRLmV5SnBZWFFpT2pFMk9UQXlOelV4T0Rrc0ltcDBhU0k2SW1FME5HSXlNakEwTFdWaVlXSXROR1psTVMxaE5ERmpMV05rTWpsak9EUmtOemc1T1NJc0ltbHpjeUk2SW1oMGRIQnpPaTh2YTJWNVkyeHZZV3N1YUdWc2MybHVaeTFrWlhZdVlXa3ZZWFYwYUM5eVpXRnNiWE12YUdWc2MybHVaeUlzSW1GMVpDSTZJbWgwZEhCek9pOHZhMlY1WTJ4dllXc3VhR1ZzYzJsdVp5MWtaWFl1WVdrdllYVjBhQzl5WldGc2JYTXZhR1ZzYzJsdVp5SXNJbk4xWWlJNklqTTBObUkwT0RabExXTTVPVFV0TkRNM055MWhOMlV4TFRKaU56WTJNbVJqWm1ZME5TSXNJblI1Y0NJNklrOW1abXhwYm1VaUxDSmhlbkFpT2lKa1pYWnBZMlV0WTJ4cFpXNTBJaXdpYzJWemMybHZibDl6ZEdGMFpTSTZJakU0TWpobFpXRmtMVFprTnpFdE5ERTBaaTA1WVdRekxUVXdNalkxTXpnek5HVmhOaUlzSW5OamIzQmxJam9pYjNCbGJtbGtJRzltWm14cGJtVmZZV05qWlhOeklIQnliMlpwYkdVZ1pXMWhhV3dnYzNCcGJtVXRZbUZqYTJWdVpDSXNJbk5wWkNJNklqRTRNamhsWldGa0xUWmtOekV0TkRFMFppMDVZV1F6TFRVd01qWTFNemd6TkdWaE5pSjkucjBLT3ptWEtQVHBGY3dLNEU5MDE4V3hfSUxXTlJfQlM4ZlQ3STE5WUlPMCIsICJiZWFyZXJfZXhwaXJ5IjogMTY5MDI5MzE4OC43MzgzNTEsICJ2ZXJzaW9uIjogMX19
 
@@ -159,3 +189,5 @@ eval "$(starship init zsh)"
 
 autoload -Uz compinit
 zstyle ':completion:*' menu select
+
+sysinfo
