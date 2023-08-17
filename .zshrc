@@ -135,14 +135,15 @@ export LC_ALL=en_US.UTF-8
 alias ls="exa --color=always --octal-permissions --git --group-directories-first --classify --long"
 alias la="exa -a --color=always --octal-permissions --git --group-directories-first --classify --long"
 alias ll="exa -a --color=always --octal-permissions --git --group-directories-first --classify --long"
-# Tree view: use as `lt 3 <folder>` for a 3 level tree of <folder>
-alias tree="dust -r"
+# Tree view: use as `lt d 3` for a 3 level tree
+alias tree="dust -irb -n 80"
 alias lt="dust -r"
 
 alias cf="cd \$(find . -type d -print | fzf)"
 alias cat="batcat"
 alias sysinfo="macchina -UKs"
 alias kw=krakenw
+alias kr="krakenw r"
 alias lgit=lazygit
 alias top=btm
 alias dots='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
