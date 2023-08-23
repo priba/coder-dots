@@ -141,7 +141,7 @@ alias lt="dust -r"
 
 alias cf="cd \$(find . -type d -print | fzf)"
 alias cat="batcat"
-alias sysinfo="macchina -UKs"
+alias sysinfo="macchina -t Helium -UKs"
 alias kw=krakenw
 alias kr="krakenw r"
 alias lgit=lazygit
