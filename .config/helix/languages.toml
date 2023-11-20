@@ -1,3 +1,7 @@
+[language-server.pyright]
+command = "pyright-langserver"
+args = [ "--stdio" ]
+
 [[language]]
 name = "python"
 scope = "source.python"
@@ -6,13 +10,17 @@ file-types = ["py", "pyi", "py3", "pyw", "ptl", ".pythonstartup", ".pythonrc", "
 shebangs = ["python"]
 roots = ["setup.py", "setup.cfg", "pyproject.toml"]
 comment-token = "#"
-language-server = { command = "pyright-langserver", args = ["--stdio"] }
-config = {} 
+language-servers = [{ name = "pyright"}]
 formatter = { command = "black", args = ["-"] }
 auto-format = true
 
 [[language]]
-auto-format = true
 name = "markdown"
+auto-format = true
 formatter = { command = "prettier", args = ["--parser=markdown", "--stdin"] }
 
+
+[[language]]
+name = "yaml"
+auto-format = true
+formatter = { command = "prettier", args = [ "--parser=yaml", "--stdin" ] }
